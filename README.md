@@ -16,30 +16,30 @@ This app demonstrates secure **authentication**, **state persistence**, and full
 - Logout to clear stored state
 
 ### 👥 User Management (CRUD)
-- **Create**: Add new users via a form dialog
-- **Read**: Paginated list of users from the API
-- **Update**: Edit user details
-- **Delete**: Remove users with confirmation
+- **Create**: Add new users via a form dialog  
+- **Read**: Paginated list of users from the API  
+- **Update**: Edit user details  
+- **Delete**: Remove users with confirmation  
 
 ### 💡 Interactivity Enhancements
-- 🔍 **Search & Filter** users by name or email
-- ✅ **Form Validation** with error messaging
-- 🗑️ **Confirmation Dialogs** before delete/update
-- 🍞 **Snackbars** for success/error notifications
+- 🔍 **Search & Filter** users by name or email  
+- ✅ **Form Validation** with error messaging  
+- 🗑️ **Confirmation Dialogs** before delete/update  
+- 🍞 **Snackbars** for success/error notifications  
 
 ### ♾️ Infinite Scroll
-- Automatically fetches more users on scroll
-- Uses `page` parameter with ReqRes API
+- Automatically fetches more users on scroll  
+- Uses `page` parameter with ReqRes API  
 
 ### 🌙 Theme Support
-- Toggle between Light & Dark Mode
-- Theme preference securely stored
-- Responsive layout via `LayoutBuilder`
+- Toggle between Light & Dark Mode  
+- Theme preference securely stored  
+- Responsive layout via `LayoutBuilder`  
 
 ### 📱 Responsive Design
-- Optimized for mobile, tablet, and web
-- Grid view for wide screens
-- List view for compact devices
+- Optimized for mobile, tablet, and web  
+- Grid view for wide screens  
+- List view for compact devices  
 
 ---
 
@@ -60,20 +60,31 @@ lib/
 ## 🛠️ Getting Started
 
 ### 1. Clone the Repository
+
 ```bash
-git clone https://github.com/your-username/flutter-user-management.git
-cd flutter-user-management
+git clone https://github.com/gaurav0330/Techolab.git
+cd Techolab
 ```
 
 ### 2. Install Dependencies
+
 ```bash
 flutter pub get
 ```
 
 ### 3. Run the App
+
 ```bash
 flutter run
 ```
+
+---
+
+## 📱 APK Download
+
+📦 [Download APK](https://drive.google.com/file/d/1eOs_9CD5lmY2_WrgE285VSxYTjvgT_Q3/view?usp=sharing)
+
+> Download and install this APK on your Android device to try out the full app experience.
 
 ---
 
@@ -90,15 +101,10 @@ Password: pistol
 
 ---
 
-## 📸 Screenshots
+## 🎥 Demo Video
 
-| Login Screen             | User List (Light Theme)      | User List (Dark Theme)      |
-|--------------------------|------------------------------|-----------------------------|
-| ![login](screenshots/login.png) | ![light](screenshots/user_light.png) | ![dark](screenshots/user_dark.png) |
-
-| User Form Dialog         | User Profile View            |
-|--------------------------|------------------------------|
-| ![form](screenshots/form.png) | ![profile](screenshots/profile.png) |
+📺 [Watch the Demo](https://your-demo-video-link.com)  
+*(Replace this link with your actual uploaded demo video, e.g., YouTube, Loom, or Google Drive)*
 
 ---
 
@@ -113,34 +119,15 @@ Password: pistol
 
 ---
 
-## 📄 Submission Checklist
-
-- ✅ APK File: `build/app/outputs/flutter-apk/app-release.apk`
-- ✅ GitHub Repository: [GitHub Repo Link Here](https://github.com/your-username/flutter-user-management)
-- ✅ Well-structured README with features, setup, and screenshots
-- ✅ Clean, maintainable code with best practices
-
----
-
-## 🔮 Future Enhancements
-
-- Add local DB (e.g., Hive or Drift) for offline caching
-- Integrate unit and widget testing
-- Role-based user access (e.g., Admin vs Member)
-- Enhanced UI animations and transitions
-
----
-
 ## ✉️ Contact
 
 **TechoLab - Flutter Developer Internship Submission**  
-📨 your-email@example.com  
-🌐 [your-portfolio.com](https://your-portfolio.com)
+📨 gauravjikar070806@gmail.com  
+🌐 [portfolio](https://gauravjikar.netlify.app/)
 
 ---
 
 ## 📜 License
 
 This project is licensed under the [MIT License](LICENSE).
-
----
+```
