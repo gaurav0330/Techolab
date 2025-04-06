@@ -99,14 +99,13 @@ Password: pistol
 
 > Password is arbitrary but `pistol` is used for demo consistency.
 
----
+<!-- ---
 
 ## 🎥 Demo Video
 
 📺 [Watch the Demo](https://your-demo-video-link.com)  
-*(Replace this link with your actual uploaded demo video, e.g., YouTube, Loom, or Google Drive)*
 
----
+--- -->
 
 ## 📦 Dependencies
 

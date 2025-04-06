@@ -1,10 +1,6 @@
-// lib/main.dart
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'screens/login_screen.dart';
-import 'screens/user_management_screen.dart';
 import 'screens/splash_screen.dart'; // Initial splash screen
 
 import 'providers/theme_provider.dart';
