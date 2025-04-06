@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import '../models/user_model.dart';
 
+/// Displays a custom animated delete confirmation dialog
 void showDeleteConfirmationDialog(
-    BuildContext context, {
-      required User user,
-      required VoidCallback onConfirm,
-    }) {
+  BuildContext context, {
+  required User user,
+  required VoidCallback onConfirm,
+}) {
   showGeneralDialog(
     context: context,
-    barrierDismissible: true,
+    barrierDismissible: true, // Dismiss the dialog by tapping outside
     barrierLabel: "Delete Confirmation",
     transitionDuration: const Duration(milliseconds: 300),
     pageBuilder: (_, __, ___) {
@@ -19,6 +20,7 @@ void showDeleteConfirmationDialog(
         ),
       );
     },
+    // Adds slide and fade transition to the dialog
     transitionBuilder: (_, animation, __, child) {
       return SlideTransition(
         position: Tween<Offset>(
@@ -37,6 +39,7 @@ void showDeleteConfirmationDialog(
   );
 }
 
+/// The custom delete dialog widget with animation and confirmation UI
 class _AnimatedDeleteDialog extends StatelessWidget {
   final User user;
   final VoidCallback onConfirm;
@@ -54,16 +57,21 @@ class _AnimatedDeleteDialog extends StatelessWidget {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       backgroundColor: theme.dialogBackgroundColor,
-      title: const Text('Confirm Delete', style: TextStyle(fontWeight: FontWeight.bold)),
+      title: const Text(
+        'Confirm Delete',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
       content: Text(
         'Are you sure you want to delete ${user.firstName}?',
         style: theme.textTheme.bodyMedium,
       ),
       actions: [
+        // Cancel button to dismiss dialog
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Cancel'),
         ),
+        // Delete button with confirmation callback
         ElevatedButton.icon(
           icon: const Icon(Icons.delete_forever, size: 18),
           style: ElevatedButton.styleFrom(
@@ -71,8 +79,8 @@ class _AnimatedDeleteDialog extends StatelessWidget {
             foregroundColor: theme.colorScheme.onError,
           ),
           onPressed: () {
-            onConfirm();
-            Navigator.of(context).pop();
+            onConfirm(); // Call the delete function
+            Navigator.of(context).pop(); // Close the dialog
           },
           label: const Text('Delete'),
         ),

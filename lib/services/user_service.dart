@@ -4,6 +4,7 @@ import '../utils/constants.dart';
 import '../models/user_model.dart';
 
 class UserService {
+  // Fetches users from the API with optional pagination
   Future<List<User>> fetchUsers({int page = 1}) async {
     final url = Uri.parse('${ApiConstants.users}?page=$page');
     final response = await http.get(url);
@@ -16,6 +17,7 @@ class UserService {
     }
   }
 
+  // Creates a new user and returns the User object
   Future<User> createUser(String name, String job) async {
     final response = await http.post(
       Uri.parse(ApiConstants.users),
@@ -25,7 +27,7 @@ class UserService {
     if (response.statusCode == 201) {
       final jsonData = json.decode(response.body);
 
-      // Simple fallback logic to extract first and last name
+      // Parse name into first and last name (fallback logic)
       final nameParts = name.trim().split(' ');
       final firstName = nameParts.isNotEmpty ? nameParts.first : name;
       final lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '';
@@ -44,7 +46,7 @@ class UserService {
     }
   }
 
-
+  // Updates user data (name and job)
   Future<User> updateUser(int id, String name, String job) async {
     final response = await http.put(
       Uri.parse('${ApiConstants.users}/$id'),
@@ -64,6 +66,7 @@ class UserService {
     }
   }
 
+  // Deletes user by ID
   Future<void> deleteUser(int id) async {
     final response = await http.delete(
       Uri.parse('${ApiConstants.users}/$id'),

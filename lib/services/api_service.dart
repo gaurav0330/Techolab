@@ -4,8 +4,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../utils/constants.dart';
 
 class AuthService {
+  // Secure storage for persisting authentication token
   final storage = FlutterSecureStorage();
 
+  // Logs in the user and stores the token securely
   Future<bool> login(String email, String password) async {
     final url = Uri.parse(ApiConstants.login);
     final response = await http.post(
@@ -22,6 +24,7 @@ class AuthService {
     }
   }
 
+  // Registers a new user
   Future<bool> register(String email, String password) async {
     final url = Uri.parse(ApiConstants.register);
     final response = await http.post(
@@ -32,10 +35,12 @@ class AuthService {
     return response.statusCode == 200;
   }
 
+  // Logs out the user by removing the token
   Future<void> logout() async {
     await storage.delete(key: 'token');
   }
 
+  // Checks if user is already logged in
   Future<bool> isLoggedIn() async {
     final token = await storage.read(key: 'token');
     return token != null;

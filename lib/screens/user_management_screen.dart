@@ -30,15 +30,17 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
     super.initState();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
+    // Infinite scroll to fetch more users
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
-          _scrollController.position.maxScrollExtent - 100 &&
+              _scrollController.position.maxScrollExtent - 100 &&
           !userProvider.isFetchingMore &&
           userProvider.hasMore) {
         userProvider.fetchUsers();
       }
     });
 
+    // Fetch initial users after first frame
     WidgetsBinding.instance.addPostFrameCallback((_) {
       userProvider.fetchInitialUsers();
     });
@@ -50,6 +52,7 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
     super.dispose();
   }
 
+  // Show user form for add/edit
   void _showUserForm({User? user}) async {
     final result = await showDialog<User>(
       context: context,
@@ -65,6 +68,7 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
     }
   }
 
+  // Confirm user deletion
   void _confirmDelete(User user) {
     showDeleteConfirmationDialog(
       context,
@@ -79,6 +83,7 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
     );
   }
 
+  // Logout and navigate to login screen
   void _logout() async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     await authProvider.logout();
@@ -100,6 +105,7 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
             actions: [
               Row(
                 children: [
+                  // Theme toggle switch
                   Consumer<ThemeProvider>(
                     builder: (context, themeProvider, _) => Switch(
                       value: themeProvider.isDarkMode,
@@ -117,87 +123,89 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
           body: userProvider.isLoading
               ? const Center(child: CircularProgressIndicator())
               : SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: Search(
-                          onSearch: userProvider.search,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // Search and sort
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              child: Search(
+                                onSearch: userProvider.search,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                                constraints: const BoxConstraints(maxWidth: 160),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).cardColor,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: Colors.grey.shade400),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    value: userProvider.sortBy,
+                                    onChanged: (value) {
+                                      if (value != null) {
+                                        userProvider.setSortBy(value);
+                                      }
+                                    },
+                                    icon: Icon(Icons.sort,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.color),
+                                    dropdownColor: Theme.of(context)
+                                        .scaffoldBackgroundColor,
+                                    isExpanded: true,
+                                    items: const [
+                                      DropdownMenuItem(
+                                          value: 'Name',
+                                          child: Text('Sort by Name')),
+                                      DropdownMenuItem(
+                                          value: 'Email',
+                                          child: Text('Sort by Email')),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          padding:
-                          const EdgeInsets.symmetric(horizontal: 12),
-                          constraints: const BoxConstraints(maxWidth: 160),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).cardColor,
-                            borderRadius: BorderRadius.circular(10),
-                            border:
-                            Border.all(color: Colors.grey.shade400),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              value: userProvider.sortBy,
-                              onChanged: (value) {
-                                if (value != null) {
-                                  userProvider.setSortBy(value);
-                                }
-                              },
-                              icon: Icon(Icons.sort,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.color),
-                              dropdownColor:
-                              Theme.of(context).scaffoldBackgroundColor,
-                              isExpanded: true,
-                              items: const [
-                                DropdownMenuItem(
-                                    value: 'Name',
-                                    child: Text('Sort by Name')),
-                                DropdownMenuItem(
-                                    value: 'Email',
-                                    child: Text('Sort by Email')),
-                              ],
+                        const SizedBox(height: 12),
+
+                        // User list with pull-to-refresh
+                        Expanded(
+                          child: RefreshIndicator(
+                            onRefresh: userProvider.refreshUsers,
+                            child: UserList(
+                              controller: _scrollController,
+                              users: userProvider.users,
+                              isFetchingMore: userProvider.isFetchingMore,
+                              onEdit: (user) => _showUserForm(user: user),
+                              onDelete: _confirmDelete,
+                              onTap: (user) => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => UserProfileScreen(user: user),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Expanded(
-                    child: RefreshIndicator(
-                      onRefresh: userProvider.refreshUsers,
-                      child: UserList(
-                        controller: _scrollController,
-                        users: userProvider.users,
-                        isFetchingMore: userProvider.isFetchingMore,
-                        onEdit: (user) => _showUserForm(user: user),
-                        onDelete: _confirmDelete,
-                        onTap: (user) => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) =>
-                                UserProfileScreen(user: user),
-                          ),
-                        ),
-                      ),
+                        const SizedBox(height: 60),
+                      ],
                     ),
                   ),
-                  const SizedBox(height:60),
-                ],
-              ),
-            ),
-          ),
+                ),
+          // Add user button
           floatingActionButton: FloatingActionButton.extended(
             onPressed: () => _showUserForm(),
             icon: const Icon(Icons.add),

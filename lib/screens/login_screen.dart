@@ -27,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
   @override
   void initState() {
     super.initState();
+    // Initialize fade-in animation
     _fadeController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 700),
@@ -46,6 +47,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
     super.dispose();
   }
 
+  // Handles login logic and navigation
   void _login() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -63,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
       if (token != null && mounted) {
         Provider.of<AuthProvider>(context, listen: false).login(token);
 
+        // Navigate to UserManagementScreen with fade transition
         Navigator.pushReplacement(
           context,
           PageRouteBuilder(
@@ -114,6 +117,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                   key: _formKey,
                   child: Column(
                     children: [
+                      // Email input
                       CustomTextFormField(
                         controller: _emailController,
                         label: 'Email',
@@ -121,6 +125,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                         value!.isEmpty ? 'Email required' : null,
                       ),
                       const SizedBox(height: 16),
+                      // Password input
                       CustomTextFormField(
                         controller: _passwordController,
                         label: 'Password',
@@ -129,6 +134,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                         value!.isEmpty ? 'Password required' : null,
                       ),
                       const SizedBox(height: 24),
+                      // Login button with loading state
                       LoadingButton(
                         isLoading: _isLoading,
                         onPressed: _login,
@@ -138,6 +144,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                   ),
                 ),
                 const SizedBox(height: 16),
+                // Navigate to Register screen
                 TextButton(
                   onPressed: () {
                     Navigator.push(

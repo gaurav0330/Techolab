@@ -1,6 +1,7 @@
 // lib/widgets/loading_button.dart
 import 'package:flutter/material.dart';
 
+/// A custom button that shows a loading spinner when `isLoading` is true.
 class LoadingButton extends StatelessWidget {
   final bool isLoading;
   final VoidCallback onPressed;
@@ -16,6 +17,7 @@ class LoadingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      // Disable button while loading
       onPressed: isLoading ? null : onPressed,
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
@@ -28,15 +30,16 @@ class LoadingButton extends StatelessWidget {
         duration: const Duration(milliseconds: 300),
         transitionBuilder: (Widget child, Animation<double> animation) =>
             FadeTransition(opacity: animation, child: child),
+        // Show loading spinner or button label
         child: isLoading
             ? const SizedBox(
-          height: 22,
-          width: 22,
-          child: CircularProgressIndicator(
-            strokeWidth: 2.5,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-          ),
-        )
+                height: 22,
+                width: 22,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.5,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              )
             : Text(label, key: const ValueKey('label')),
       ),
     );

@@ -1,6 +1,6 @@
-// lib/widgets/custom_text_form_field.dart
 import 'package:flutter/material.dart';
 
+/// A reusable styled TextFormField widget with dark/light theme support.
 class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final String label;

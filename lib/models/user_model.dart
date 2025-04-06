@@ -17,6 +17,7 @@ class User {
     this.createdAt,
   });
 
+  // Factory method to create a User instance from JSON
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],
@@ -31,6 +32,7 @@ class User {
     );
   }
 
+  // Create a new User object with updated fields
   User copyWith({
     int? id,
     String? firstName,

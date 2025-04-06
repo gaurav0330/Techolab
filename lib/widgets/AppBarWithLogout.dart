@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/theme_provider.dart';
 
+/// A reusable AppBar widget with title, theme toggle, and logout button.
 class AppBarWithLogout extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onLogout;
 
@@ -20,6 +21,7 @@ class AppBarWithLogout extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         Row(
           children: [
+            // Theme icon that switches based on current mode
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               transitionBuilder: (Widget child, Animation<double> animation) {
@@ -31,6 +33,8 @@ class AppBarWithLogout extends StatelessWidget implements PreferredSizeWidget {
                 color: Colors.yellow[700],
               ),
             ),
+
+            // Toggle switch to switch between light and dark mode
             Consumer<ThemeProvider>(
               builder: (context, themeProvider, _) {
                 return Switch(
@@ -39,6 +43,8 @@ class AppBarWithLogout extends StatelessWidget implements PreferredSizeWidget {
                 );
               },
             ),
+
+            // Logout icon button
             IconButton(
               icon: const Icon(Icons.logout),
               tooltip: 'Logout',
@@ -51,6 +57,7 @@ class AppBarWithLogout extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
+  /// Defines the preferred size for the AppBar.
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

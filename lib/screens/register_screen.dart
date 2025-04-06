@@ -6,7 +6,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../widgets/custom_text_form_field.dart';
 import '../widgets/loading_button.dart';
 import '../providers/auth_provider.dart';
-// ... [imports remain the same]
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -27,12 +26,11 @@ class _RegisterScreenState extends State<RegisterScreen> with SingleTickerProvid
   late final Animation<Offset> _slideAnimation;
   late final Animation<double> _fadeAnimation;
 
-
-
   @override
   void initState() {
     super.initState();
 
+    // Initialize animation controller and set up animations
     _animController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
@@ -57,6 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> with SingleTickerProvid
     super.dispose();
   }
 
+  // Function to handle registration using ReqRes API
   Future<void> registerUser() async {
     setState(() => isLoading = true);
 
@@ -76,6 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> with SingleTickerProvid
         final data = jsonDecode(response.body);
         final token = data['token'];
 
+        // Store token securely and update provider
         await storage.write(key: 'token', value: token);
         if (mounted) {
           Provider.of<AuthProvider>(context, listen: false).login(token);
@@ -92,6 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> with SingleTickerProvid
     }
   }
 
+  // Show a styled snackbar message
   void showSnack(String message, {bool isSuccess = false}) {
     final theme = Theme.of(context);
     final bgColor = isSuccess ? Colors.green : theme.colorScheme.error;
@@ -113,7 +114,6 @@ class _RegisterScreenState extends State<RegisterScreen> with SingleTickerProvid
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final primaryColor = isDark ? Colors.blue[400] : Theme.of(context).colorScheme.primary;
 
-
     return Scaffold(
       backgroundColor: isDark ? Colors.black : Colors.grey[100],
       appBar: AppBar(
@@ -132,21 +132,26 @@ class _RegisterScreenState extends State<RegisterScreen> with SingleTickerProvid
               key: _formKey,
               child: Column(
                 children: [
+                  // Header icon
                   Icon(Icons.app_registration_rounded,
                       size: 80,
                       color: Theme.of(context).colorScheme.primary),
                   const SizedBox(height: 16),
+                  // Title
                   Text(
                     "Create a new account",
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
+                  // Subtitle
                   Text(
                     "Join us and explore amazing features.",
                     style: Theme.of(context).textTheme.bodyMedium,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 24),
+
+                  // Email field
                   TextFormField(
                     controller: emailController,
                     decoration: InputDecoration(
@@ -159,6 +164,8 @@ class _RegisterScreenState extends State<RegisterScreen> with SingleTickerProvid
                     validator: (value) => value!.isEmpty ? "Email cannot be empty" : null,
                   ),
                   const SizedBox(height: 16),
+
+                  // Password field
                   TextFormField(
                     controller: passwordController,
                     obscureText: true,
@@ -172,24 +179,28 @@ class _RegisterScreenState extends State<RegisterScreen> with SingleTickerProvid
                     validator: (value) => value!.isEmpty ? "Password cannot be empty" : null,
                   ),
                   const SizedBox(height: 30),
+
+                  // Register button
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
                       icon: isLoading
                           ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                      )
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                            )
                           : Icon(
-                        Icons.arrow_forward,
-                        color: isDark ? Colors.white : Colors.black,
-                      ),
+                              Icons.arrow_forward,
+                              color: isDark ? Colors.white : Colors.black,
+                            ),
                       label: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         child: Text(
                           isLoading ? "Registering..." : "Register",
-                          style: TextStyle(fontSize: 16, color: isDark ? Colors.white : Colors.black,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: isDark ? Colors.white : Colors.black,
                           ),
                         ),
                       ),
@@ -200,10 +211,10 @@ class _RegisterScreenState extends State<RegisterScreen> with SingleTickerProvid
                       onPressed: isLoading
                           ? null
                           : () {
-                        if (_formKey.currentState!.validate()) {
-                          registerUser();
-                        }
-                      },
+                              if (_formKey.currentState!.validate()) {
+                                registerUser();
+                              }
+                            },
                     ),
                   ),
                 ],

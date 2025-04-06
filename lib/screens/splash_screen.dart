@@ -21,6 +21,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
+    // Initialize fade-in animation for splash screen content
     _fadeController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -35,6 +36,7 @@ class _SplashScreenState extends State<SplashScreen>
     _navigate();
   }
 
+  // Navigate to login or user management screen based on auth status
   Future<void> _navigate() async {
     await Future.delayed(const Duration(milliseconds: 500));
     await Provider.of<AuthProvider>(context, listen: false).checkLoginStatus();
@@ -48,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen>
         context,
         MaterialPageRoute(
           builder: (_) =>
-          isLoggedIn ? const UserManagementScreen() : const LoginScreen(),
+              isLoggedIn ? const UserManagementScreen() : const LoginScreen(),
         ),
       );
     }
@@ -66,6 +68,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     return Scaffold(
       body: Container(
+        // Background gradient based on theme
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: isDark
@@ -81,6 +84,7 @@ class _SplashScreenState extends State<SplashScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // App logo with hero animation
                 Hero(
                   tag: "logo",
                   child: Image.asset(
@@ -90,6 +94,7 @@ class _SplashScreenState extends State<SplashScreen>
                   ),
                 ),
                 const SizedBox(height: 30),
+                // App title
                 Text(
                   'TechoLab',
                   style: TextStyle(
@@ -100,16 +105,18 @@ class _SplashScreenState extends State<SplashScreen>
                   ),
                 ),
                 const SizedBox(height: 10),
+                // Tagline
                 Text(
                   'Empowering developers',
                   style: TextStyle(
                     fontSize: 16,
                     color:
-                    isDark ? Colors.grey.shade400 : Colors.grey.shade700,
+                        isDark ? Colors.grey.shade400 : Colors.grey.shade700,
                     fontStyle: FontStyle.italic,
                   ),
                 ),
                 const SizedBox(height: 40),
+                // Loading indicator
                 CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(
                       isDark ? Colors.white : Colors.black87),
